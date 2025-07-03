@@ -34,11 +34,19 @@ def main():
                 return
 
         updatable.update(dt)
-
+            
+        # Asteroid Group Loop
         for asteroid in asteroid_group:
             if asteroid.collision(player):
                 print("Game over!")
                 sys.exit() # Quit/close game
+            
+            for shot in shot_group:
+                if shot.collision(asteroid):
+                    shot.kill()
+                    asteroid.kill()
+                    
+            # Asteroid Group Loop End
 
         screen.fill("black")
 
