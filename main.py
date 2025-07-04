@@ -26,6 +26,14 @@ def main():
 
     dt = 0
 
+    # Score
+    def draw_text(text, font, text_col, x, y):
+        img = font.render(text, True, text_col)
+        screen.blit(img, (x, y))
+    
+    score = 0
+    score_font = pygame.font.SysFont("Arial", 30)
+
     # Infinite game loop
     while True:
         # Quits game if (x) button is pressed
@@ -38,17 +46,19 @@ def main():
         # Asteroid Group Loop
         for asteroid in asteroid_group:
             if asteroid.collision(player):
-                print("Game over!")
+                print(f"Game over! Score: {score}")
                 sys.exit() # Quit/close game
             
             for shot in shot_group:
                 if shot.collision(asteroid):
                     shot.kill()
                     asteroid.split()
+                    score += 1
 
             # Asteroid Group Loop End
 
         screen.fill("black")
+        draw_text(f"Score: {score}", score_font, "green", 0, 0)
 
         for object in drawable:
             object.draw(screen)
